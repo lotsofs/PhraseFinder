@@ -18,13 +18,6 @@ namespace Steve {
 			FindSentences(text);
 			FindPhrases(text);
 
-			//// change all of the file to lower case, and remove any strange characters there may be (anything that isn't in the regex)
-			//Regex regex = new Regex("^[a-zA-Z0-9,.!?:;']");
-			//text = regex.Replace(text, "");
-
-			//Dictionary<string, int> dictionary 
-
-			//Console.WriteLine(text);
 			Process.Start("explorer.exe", Environment.CurrentDirectory);
 			Console.WriteLine("Done, press any key to close");
 			Console.Read();
@@ -73,7 +66,8 @@ namespace Steve {
 				}
 			}
 
-			WriteFile(occurances, "words.txt");
+			int dupes = WriteFile(occurances, "words.txt");
+			Console.WriteLine("Found " + dupes + " duplicate words");
 		}
 
 		static void FindSentences(string text) {
@@ -92,8 +86,8 @@ namespace Steve {
 					occurances.Add(sentence, 1);
 				}
 			}
-			WriteFile(occurances, "sentences.txt");
-
+			int dupes = WriteFile(occurances, "sentences.txt");
+			Console.WriteLine("Found " + dupes + " duplicate sentences");
 		}
 
 		static void FindPhrases(string text) {
@@ -104,7 +98,7 @@ namespace Steve {
 				word.Trim();
 			}
 
-			int phraseLength = 1;
+			int phraseLength = 2;
 			bool stillHaveDuplicates;
 			do {
 				Console.WriteLine("Finding Phrases of length " + phraseLength);
@@ -127,7 +121,7 @@ namespace Steve {
 				if (dupes > 0) {
 					stillHaveDuplicates = true;
 				}
-				Console.WriteLine("Found " + dupes + " phrases of length " + phraseLength);
+				Console.WriteLine("Found " + dupes + " duplicate phrases of length " + phraseLength);
 				phraseLength++;
 				//if (phraseLength > 3000) {
 				//	return;
